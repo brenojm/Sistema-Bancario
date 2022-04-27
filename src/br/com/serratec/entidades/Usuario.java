@@ -25,5 +25,14 @@ public abstract class Usuario {
 	public String getCpf() {
 		return cpf;
 	}
-	
-}
+	public void autenticar(String cpfDigitado, String senhaDigitada ) throws LoginInvalidoException 
+        if(!this.cpf.equals(cpfDigitado)  && !this.senha.equals(senhaDigitada)) {
+           throw new LoginInvalido();
+                System.out.println("Usuário logado com sucesso");
+            }
+
+}  
+
+
+    
+
