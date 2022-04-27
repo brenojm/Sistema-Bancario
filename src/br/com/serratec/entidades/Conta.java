@@ -1,11 +1,12 @@
 package br.com.serratec.entidades;
 
-public class Conta {
+import br.com.serratec.interfaces.metodosConta;
+
+public abstract class Conta implements metodosConta{
 	protected Usuario usuario;
 	protected int agencia;
 	protected int idConta;
 	protected char tipoConta;
-	protected double saldo;
 	
 	public Conta(Usuario usuario, int agencia, int idConta, char tipoConta) {
 		this.usuario = usuario;
@@ -13,6 +14,27 @@ public class Conta {
 		this.idConta = idConta;
 		this.tipoConta = tipoConta;
 	}
+
+	public int getAgencia() {
+		return agencia;
+	}
+
+	public void setAgencia(int agencia) {
+		this.agencia = agencia;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public int getIdConta() {
+		return idConta;
+	}
+
+	public char getTipoConta() {
+		return tipoConta;
+	}
+
 	
 	
 }
