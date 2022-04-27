@@ -1,10 +1,10 @@
 package br.com.serratec.excecoes;
 
-public class SaldoInsuficiente extends Exception  {
+public class valorNegativoException extends Exception  {
 	
 	@Override
 	public String getMessage() {
-		return "Saldo insuficiente!";
+		return "Valor Menor";
 	}
 
 }

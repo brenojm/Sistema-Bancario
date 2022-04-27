@@ -1,6 +1,7 @@
 package br.com.serratec.entidades;
 
 import br.com.serratec.enums.TipoTaxa;
+import br.com.serratec.excecoes.valorNegativoException;
 
 public class ContaPoupanca extends Conta {
 	private String tipo;
@@ -26,12 +27,12 @@ public class ContaPoupanca extends Conta {
 	}
 
 	@Override
-	public void depositar(double valorInserido) {
-		if (valorInserido >= 0) {
+	public void depositar(double valorInserido) throws valorNegativoException {
+		if (valorInserido > 0) {
 			this.saldoContaPoupanca += (valorInserido - TipoTaxa.DEPOSITO.getValorTaxa());
 			System.out.println("Depósito Realizado com sucesso!");
 		} else {
-			// TODO throw new valorNegativoException();
+			throw new valorNegativoException();
 		}
 	}
 	
