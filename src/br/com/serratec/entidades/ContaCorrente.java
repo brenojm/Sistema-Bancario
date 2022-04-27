@@ -1,7 +1,7 @@
 package br.com.serratec.entidades;
 
 import br.com.serratec.enums.TipoTaxa;
-import br.com.serratec.interfaces.metodosConta;
+import br.com.serratec.excecoes.valorNegativoException;
 
 public final class ContaCorrente extends Conta {
 	private String tipo;
@@ -29,19 +29,30 @@ public final class ContaCorrente extends Conta {
 	}
 
 	@Override
-	public void depositar(double valorInserido) {
-		if (valorInserido >= 0) {
+	public void depositar(double valorInserido) throws valorNegativoException {
+		if (valorInserido > 0) {
 			this.saldoContaCorrente += (valorInserido - TipoTaxa.DEPOSITO.getValorTaxa());
 			System.out.println("Depósito Realizado com sucesso!");
 		} else {
-			// TODO throw new valorNegativoException();
+			throw new valorNegativoException();
 		}
 	}
 	
-	@Override
-	public boolean transferencia(double valorInserido, Conta conta) {
-		// TODO
-	}
+	
+//TODO	public boolean transferencia(double valorInserido, ContaCorrente conta) {
+//		if(conta.tipoConta == 'c') {
+//			if(valorInserido > 0 && valorInserido <= this.saldoContaCorrente) {
+//				this.saldoContaCorrente -= valorInserido;
+//				conta. += valorInserido;
+//				System.out.println("Transferência no valor de R$" + valorInserido + " para " + conta.getUsuario().getNome());
+//				return true;
+//			}else{
+//				return false;
+//			}
+//		}
+//		
+//		
+//	}
 	
 	@Override
 	public double getSaldo() {
