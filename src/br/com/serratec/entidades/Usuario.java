@@ -1,15 +1,16 @@
 package br.com.serratec.entidades;
 
-import br.;
+import br.com.serratec.excecoes.DocumentoInvalido;
+import br.com.serratec.validador.ValidarCpf;
 
 public abstract class Usuario {
 	protected String nome;
 	protected final String cpf;
 	protected String senha;
 
-	public Usuario(String nome, String cpf, String senha) {
+	public Usuario(String nome, String cpf, String senha) throws DocumentoInvalido {
 		this.nome = nome;
-		this.cpf = cpf;
+		this.cpf = ValidarCpf.validarCpf(cpf);
 		this.senha = senha;
 	}
 
