@@ -1,8 +1,10 @@
 package br.com.serratec.entidades;
 
+import br.;
+
 public abstract class Usuario {
 	protected String nome;
-	protected String cpf;
+	protected final String cpf;
 	protected String senha;
 
 	public Usuario(String nome, String cpf, String senha) {
@@ -10,10 +12,6 @@ public abstract class Usuario {
 		this.cpf = cpf;
 		this.senha = senha;
 	}
-
-//	public boolean autenticar() {
-//		
-//	}
 
 	public String getNome() {
 		return nome;
@@ -26,5 +24,5 @@ public abstract class Usuario {
 	public String getCpf() {
 		return cpf;
 	}
-
+	
 }
