@@ -31,19 +31,3 @@ public abstract class Usuario implements Autenticacao {
 	public String getCpf() {
 		return cpf;
 	}
-<<<<<<< Updated upstream
-	public void autenticar(String cpfDigitado, String senhaDigitada ) throws LoginInvalidoException 
-        if(!this.cpf.equals(cpfDigitado)  && !this.senha.equals(senhaDigitada)) {
-           throw new LoginInvalido();
-                System.out.println("Usuário logado com sucesso");
-            }
-
-}  
-
-
-    
-
-=======
-	
-}
->>>>>>> Stashed changes
