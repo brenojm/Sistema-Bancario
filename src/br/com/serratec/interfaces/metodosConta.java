@@ -2,11 +2,11 @@ package br.com.serratec.interfaces;
 
 public interface metodosConta {
 	
-	public boolean sacar();
+	public boolean sacar(double valorInserido);
 	
-	public double depositar();
+	public void depositar();
 	
 	public boolean transferencia();
 	
-	public double verSaldo();
+	public double getSaldo();
 }
