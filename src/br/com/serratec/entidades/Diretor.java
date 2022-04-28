@@ -1,9 +1,10 @@
 package br.com.serratec.entidades;
 
-public class Diretor extends Funcionario {
+import br.com.serratec.excecoes.DocumentoInvalido;
 
-	public Diretor(String nome, String cpf, String senha, String cargo) {
+public class Diretor extends Funcionario{
+
+	public Diretor(String nome, String cpf, String senha, String cargo) throws DocumentoInvalido {
 		super(nome, cpf, senha, cargo);
-	}
-	
+	}	
 }
