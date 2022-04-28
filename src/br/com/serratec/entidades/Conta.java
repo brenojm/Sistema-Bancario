@@ -64,7 +64,7 @@ public abstract class Conta implements metodosConta {
 		}
 		double valorInseridoComTaxa = (valorInserido - TipoTaxa.DEPOSITO.getValorTaxa());
 		this.saldo += valorInseridoComTaxa;
-		this.valorGastoDeposito += valorInserido;
+		this.valorGastoDeposito += TipoTaxa.DEPOSITO.getValorTaxa();
 		System.out.println("Depósito no valor de R$" + valorInseridoComTaxa + " realizado com sucesso!");
 
 	}
