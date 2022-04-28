@@ -31,3 +31,4 @@ public abstract class Usuario implements Autenticacao {
 	public String getCpf() {
 		return cpf;
 	}
+}
