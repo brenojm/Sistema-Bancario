@@ -1,11 +1,9 @@
 package br.com.serratec.entidades;
 
-import br.com.serratec.excecoes.AutenticacaoLogin;
 import br.com.serratec.excecoes.DocumentoInvalido;
-import br.com.serratec.interfaceUsuario.Autenticacao;
 import br.com.serratec.validador.ValidarCpf;
 
-public abstract class Usuario implements Autenticacao {
+public abstract class Usuario {
 	protected String nome;
 	protected final String cpf;
 	protected String senha;
@@ -15,11 +13,7 @@ public abstract class Usuario implements Autenticacao {
 		this.cpf = ValidarCpf.validarCpf(cpf);
 		this.senha = senha;
 	}
-	public void autenticar(String login) throws AutenticacaoLogin {
-		if(!this.cpf.equals(login) && !this.senha.equals(login)) {
-			throw new AutenticacaoLogin();
-		}
-	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -31,4 +25,5 @@ public abstract class Usuario implements Autenticacao {
 	public String getCpf() {
 		return cpf;
 	}
+	
 }
