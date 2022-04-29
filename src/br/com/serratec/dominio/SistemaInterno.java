@@ -2,8 +2,12 @@ package br.com.serratec.dominio;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
+import br.com.serratec.entidades.Cliente;
 import br.com.serratec.entidades.Conta;
+import br.com.serratec.entidades.Funcionario;
 import br.com.serratec.entidades.Usuario;
+import br.com.serratec.excecoes.CadastroJaExisteException;
 import br.com.serratec.excecoes.CadastroNaoExisteException;
 import br.com.serratec.excecoes.DocumentoInvalido;
 import br.com.serratec.repositorios.RepositorioUsuario;
@@ -13,6 +17,7 @@ public class SistemaInterno {
 	public static void main(String[] args) throws DocumentoInvalido, CadastroNaoExisteException {	
 		Scanner leitor = new Scanner(System.in);
 		Login(leitor);
+		System.out.println("Login efetuado com sucesso!");
 		
 		
 		//Passar conta para o menu para que sejam chamados os metodos do menu
@@ -112,5 +117,7 @@ public class SistemaInterno {
 				System.out.println(e.getMessage());
 			}
 		}while(true);
+		
 	}
+
 }
