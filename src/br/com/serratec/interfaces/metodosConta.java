@@ -1,12 +1,15 @@
 package br.com.serratec.interfaces;
 
+import br.com.serratec.entidades.Conta;
+import br.com.serratec.excecoes.ContaInvalidaException;
+import br.com.serratec.excecoes.valorInvalidoException;
+
 public interface metodosConta {
 	
-	public boolean sacar();
+	public boolean sacar(double valorInserido) throws valorInvalidoException;
 	
-	public double depositar();
+	public void depositar(double valor) throws valorInvalidoException;
 	
-	public boolean transferencia();
+	public boolean transferencia(double valorInserido, Conta conta) throws valorInvalidoException, ContaInvalidaException;
 	
-	public double verSaldo();
 }

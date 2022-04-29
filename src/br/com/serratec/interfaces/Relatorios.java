@@ -6,5 +6,4 @@ public interface Relatorios {
 	
 	public String relatorioClientes();
 	
-	public double capitalTotalBanco();
 }

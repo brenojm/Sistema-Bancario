@@ -25,5 +25,16 @@ public abstract class Usuario {
 	public String getCpf() {
 		return cpf;
 	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	
+	
+	
 	
 }

@@ -1,15 +1,29 @@
 package br.com.serratec.entidades;
 
-public class ContaCorrente extends Conta {
-	private String tipo;
-	
-	public ContaCorrente(Usuario usuario, int agencia, int idConta, char tipoConta, String tipo) {
+import br.com.serratec.enums.TipoTaxa;
+
+public final class ContaCorrente extends Conta {
+
+	public ContaCorrente(Usuario usuario, int agencia, int idConta, char tipoConta) {
 		super(usuario, agencia, idConta, tipoConta);
-		this.tipo = tipo;
 	}
-	
-	public double TributacaoContaCorrente(double i) {
+	//TODO Mostrar se o cliente tem seguro de vida no relatorio
+
+	public void TributacaoContaCorrente() {
+		double valorTotalGasto = this.valorGastoSaque + this.valorGastoDeposito + this.valorGastoTransferencia;
+		System.out.println("--=====TOTAL GASTO EM OPERAÇÕES=====--" + 
+							"\nSaques : R$" + this.valorGastoSaque +
+							"\nDepósitos: R$" + this.valorGastoDeposito +
+							"\nTransferências: R$" + this.valorGastoTransferencia +
+							"\nTotal: R$" + valorTotalGasto);
+		
+		System.out.println("\n--=====TAXAS POR OPERAÇÃO=====--" +
+							"\nSaque: R$" + TipoTaxa.SAQUE.getValorTaxa() +
+							"\nDepósito: R$" + TipoTaxa.DEPOSITO.getValorTaxa() +
+							"\nTransferência: R$" + TipoTaxa.TRANSFERENCIA.getValorTaxa() + " (Obs:Cobrado apenas do remetente)");
+		
 		
 	}
+
 
 }

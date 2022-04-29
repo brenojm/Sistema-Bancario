@@ -1,15 +1,67 @@
 package br.com.serratec.entidades;
 
-public class ContaPoupanca extends Conta{
-	private String tipo;
-	
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+import br.com.serratec.enums.TipoTaxa;
+import br.com.serratec.excecoes.DataParseException;
+import br.com.serratec.excecoes.PeriodoInvalidoException;
+import br.com.serratec.excecoes.valorInvalidoException;
+
+public class ContaPoupanca extends Conta {
+
 	public ContaPoupanca(Usuario usuario, int agencia, int idConta, char tipoConta) {
 		super(usuario, agencia, idConta, tipoConta);
+
+	}
+
+	public void rendimentoPoupanca(double valorInserido, String dataInicialString, String dataFinalString) throws valorInvalidoException {
+			if(valorInserido <= 0 && valorInserido > this.getSaldo()) {
+				throw new valorInvalidoException();
+			}
+			
+			
+			
+		try {
+			
+			DateTimeFormatter formatoDataBrasil = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			LocalDate dataInseridaInicial = LocalDate.parse(dataInicialString, formatoDataBrasil);
+			LocalDate dataInseridaFinal = LocalDate.parse(dataFinalString, formatoDataBrasil);
+			if(1 <= dataInseridaFinal.getMonthValue() - dataInseridaInicial.getMonthValue()) {
+				throw new PeriodoInvalidoException();
+			}
+			if(dataInseridaInicial.isBefore(LocalDate.now())) {
+				throw new DataParseException();
+			}
+			if(dataInseridaFinal.isBefore(dataInseridaInicial)) {
+				throw new DataParseException();
+			}
+			
+			int mesesInseridos = (dataInseridaFinal.getMonthValue() - dataInseridaInicial.getMonthValue());
+			double rendimentoTotal=valorInserido;
+			for(int i = 1; i<=mesesInseridos ; i++) {
+				rendimentoTotal += rendimentoTotal*TipoTaxa.RENDIMENTO.getValorTaxa();
+				
+			}
+			
+			System.out.println("--===Simulação Rendimento da Poupança===--" +
+								"\nRendimento: R$" + rendimentoTotal +
+								"\nData Inicial: " + formatoDataBrasil.format(dataInseridaInicial) +
+								"\nData Final: " + formatoDataBrasil.format(dataInseridaFinal) +
+								"\nMeses: " + mesesInseridos +
+								"\nRendimento Líquido: R$" + (rendimentoTotal - valorInserido) +
+								"\nValor Inicial : R$" + valorInserido);
+			
+			
+		} catch (DataParseException e){
+			e.getMessage();
+		} 
+		catch (PeriodoInvalidoException e) {
+			e.getMessage();
+		}
 		
 	}
 	
-	public double rendimentoPoupanca(double i) {
-		
-	}
+	
 
 }
