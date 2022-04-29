@@ -5,7 +5,7 @@ import br.com.serratec.validador.ValidarCpf;
 
 public abstract class Usuario {
 	protected String nome;
-	protected final String cpf;
+	protected String cpf;
 	protected String senha;
 
 	public Usuario(String nome, String cpf, String senha) throws DocumentoInvalido {
