@@ -16,9 +16,12 @@ public class SistemaInterno {
 	
 	public static void main(String[] args) throws DocumentoInvalido, CadastroNaoExisteException {	
 		Scanner leitor = new Scanner(System.in);
-		Login(leitor);
+		Usuario usuario=Login(leitor);
 		System.out.println("Login efetuado com sucesso!");
+		if(usuario.getClass()== Funcionario.class)
+		switch(usuario.getClass() = ) {
 		
+		}
 		
 		//Passar conta para o menu para que sejam chamados os metodos do menu
 	}
@@ -33,6 +36,7 @@ public class SistemaInterno {
 		case 2:
 			mostraMenuRelatorio(leitor);//adicionar conta
 			break;
+			
 		default:
 			System.out.println("Sair");
 			System.exit(0);

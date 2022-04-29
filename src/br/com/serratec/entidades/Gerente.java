@@ -7,7 +7,7 @@ public class Gerente extends Funcionario {
 	
 	public Gerente(String nome, String cpf, String senha, String cargo, int Agencia) throws DocumentoInvalido {
 		super(nome, cpf, senha, cargo);
-		this.Agencia = agencia;
+		this.agencia = agencia;
 	}
 
 	public int getAgencia() {
