@@ -9,28 +9,28 @@ import br.com.serratec.excecoes.CadastroNaoExisteException;
 public class RepositorioContaCorrente {
 	private static HashMap<String, ContaCorrente> mapaContaCorrente = new HashMap< String, ContaCorrente>() ;
 	
-	public static void adicionaUsuario(ContaCorrente ContaCorrente) throws CadastroJaExisteException {
+	public static void adicionaContaCorrente(ContaCorrente ContaCorrente) throws CadastroJaExisteException {
 		if (mapaContaCorrente.containsKey(ContaCorrente.getIdConta())) {
 			throw new CadastroJaExisteException();
 		}
 		mapaContaCorrente.put(ContaCorrente.getIdConta(), ContaCorrente);
 	}
 	
-	public static void removeConta(String IdConta) throws CadastroNaoExisteException {
-		if (!mapaContaCorrente.containsKey(IdConta)) {
+	public static void removeContaCorrente(String IdContaCorrente) throws CadastroNaoExisteException {
+		if (!mapaContaCorrente.containsKey(IdContaCorrente)) {
 			throw new CadastroNaoExisteException();
 		}
-		mapaContaCorrente.remove(IdConta);
+		mapaContaCorrente.remove(IdContaCorrente);
 	}
 	
-	public static ContaCorrente retornaConta(String IdConta) throws CadastroNaoExisteException {
-		ContaCorrente ContaCorrentePesquisada = mapaContaCorrente.get(IdConta);
+	public static ContaCorrente retornaContaCorrente(String IdContaCorrente) throws CadastroNaoExisteException {
+		ContaCorrente ContaCorrentePesquisada = mapaContaCorrente.get(IdContaCorrente);
 		if (ContaCorrentePesquisada == null) {
 			throw new CadastroNaoExisteException();
 		}
 		return ContaCorrentePesquisada;
 	}
-	public static int NumerosUsuarios() {
+	public static int NumeroContaCorrente() {
 		return mapaContaCorrente.size();
 	}
 
