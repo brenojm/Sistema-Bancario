@@ -2,14 +2,19 @@ package br.com.serratec.dominio;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
 import br.com.serratec.entidades.Conta;
-
+import br.com.serratec.entidades.Usuario;
+import br.com.serratec.excecoes.CadastroNaoExisteException;
+import br.com.serratec.excecoes.DocumentoInvalido;
+import br.com.serratec.repositorios.RepositorioUsuario;
+import br.com.serratec.validador.ValidarCpf;
 public class SistemaInterno {
 	
-	public static void main(String[] args) {	
+	public static void main(String[] args) throws DocumentoInvalido, CadastroNaoExisteException {	
 		Scanner leitor = new Scanner(System.in);
-		//Fazer parte de login
+		Login(leitor);
+		
+		
 		//Passar conta para o menu para que sejam chamados os metodos do menu
 	}
 	
@@ -86,5 +91,26 @@ public class SistemaInterno {
 		} while (true);
 
 		return opcao;
+	}
+	
+	public static Usuario Login(Scanner leitor) throws DocumentoInvalido, CadastroNaoExisteException{
+		do {
+			String cpf="", senha="";
+			try {
+				System.out.println("Digite seu CPF: ");
+				cpf = leitor.nextLine();
+				System.out.println("Digite sua senha: ");
+				senha = leitor.nextLine();
+				ValidarCpf.validarCpf(cpf);
+				Usuario usuario=RepositorioUsuario.retornaUsuario(cpf);
+				if(usuario.getSenha().equals(senha)) {
+					return usuario;
+				}
+			}catch (DocumentoInvalido e) {
+				System.out.println(e.getMessage());
+			}catch(CadastroNaoExisteException e) {
+				System.out.println(e.getMessage());
+			}
+		}while(true);
 	}
 }

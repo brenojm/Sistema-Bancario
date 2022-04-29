@@ -1,4 +1,4 @@
-package br.com.serratec.repositorios;
+package br.com.serratec.excecoes;
 
 public class CadastroJaExisteException extends Exception {
 	@Override

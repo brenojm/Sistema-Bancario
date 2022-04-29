@@ -3,9 +3,11 @@ package br.com.serratec.repositorios;
 import java.util.HashMap;
 
 import br.com.serratec.entidades.Usuario;
+import br.com.serratec.excecoes.CadastroJaExisteException;
+import br.com.serratec.excecoes.CadastroNaoExisteException;
 
 public class RepositorioUsuario {
-	private static HashMap<String, Usuario> mapaUsuario = new HashMap<>() ;
+	private static HashMap<String, Usuario> mapaUsuario = new HashMap< String, Usuario>() ;
 	
 	public static void adicionaUsuario(Usuario Usuario) throws CadastroJaExisteException {
 		if (mapaUsuario.containsKey(Usuario.getCpf())) {
@@ -14,7 +16,7 @@ public class RepositorioUsuario {
 		mapaUsuario.put(Usuario.getCpf(), Usuario);
 	}
 	
-	public static void removeAutor(String cpf) throws CadastroNaoExisteException {
+	public static void removeUsuario(String cpf) throws CadastroNaoExisteException {
 		if (!mapaUsuario.containsKey(cpf)) {
 			throw new CadastroNaoExisteException();
 		}
@@ -28,11 +30,8 @@ public class RepositorioUsuario {
 		}
 		return UsuarioPesquisado;
 	}
+	public static int NumerosUsuarios() {
+		return mapaUsuario.size();
+	}
 	
 }
-	
-
-		
-	
-	
-
