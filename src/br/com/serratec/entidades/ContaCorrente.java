@@ -7,8 +7,7 @@ public final class ContaCorrente extends Conta {
 	public ContaCorrente(Usuario usuario, int agencia, int idConta, char tipoConta) {
 		super(usuario, agencia, idConta, tipoConta);
 	}
-
-	// private double valorGasto;
+	//TODO Mostrar se o cliente tem seguro de vida no relatorio
 
 	public void TributacaoContaCorrente() {
 		double valorTotalGasto = this.valorGastoSaque + this.valorGastoDeposito + this.valorGastoTransferencia;
