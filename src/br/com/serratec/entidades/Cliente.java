@@ -6,9 +6,9 @@ public class Cliente extends Usuario{
 	
 	private double ValorSeguro;
 	private boolean SegurodeVida; 
-	public Cliente(String nome, String cpf, String senha, double valorSeguro) throws DocumentoInvalido {
+	public Cliente(String nome, String cpf, String senha) throws DocumentoInvalido {
 		super(nome, cpf, senha);
-		ValorSeguro = valorSeguro;
+		this.ValorSeguro = ValorSeguro;
 	}
 	public boolean ContemSegurodeVida(){
 		return SegurodeVida;	
