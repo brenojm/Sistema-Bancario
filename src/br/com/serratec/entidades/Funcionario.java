@@ -14,6 +14,13 @@ public class Funcionario extends Usuario{
         return "Funcionario [Nome= " + this.nome + ", CPF= " + this.cpf +", Cargo= "+ this.cargo+"]";
     }
 
+	
+
+	@Override
+	public String toString() {
+		return "Funcionario [ nome=" + nome + ", cpf=" + cpf + ", cargo=" + cargo +" ]";
+	}
+
 	public String getCargo() {
 		return cargo;
 	}

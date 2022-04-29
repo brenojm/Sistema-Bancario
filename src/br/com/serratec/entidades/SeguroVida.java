@@ -10,6 +10,15 @@ import br.com.serratec.excecoes.valorInvalidoException;
 import br.com.serratec.interfaces.TaxasDaConta;
 
 public class SeguroVida {
+	private double ValorSeguro;
+
+	public double getValorSeguro() {
+		return ValorSeguro;
+	}
+
+	public void setValorSeguro(double valorSeguro) {
+		ValorSeguro = valorSeguro;
+	}	
 	private String cpfSegurado;
     private double valorSegurado;
     private int qtdMeses;
