@@ -15,6 +15,7 @@ public abstract class Conta implements metodosConta {
 	protected double valorGastoSaque;
 	protected double valorGastoDeposito;
 	protected double valorGastoTransferencia;
+	
 
 	public Conta(Usuario usuario, int agencia, int idConta, char tipoConta) {
 		this.usuario = usuario;
@@ -52,6 +53,7 @@ public abstract class Conta implements metodosConta {
 		double valorInseridoComTaxa = (valorInserido - TipoTaxa.SAQUE.getValorTaxa());
 		this.saldo -= valorInseridoComTaxa;
 		this.valorGastoSaque += valorInserido;
+		Presidente.somarCapital(TipoTaxa.SAQUE.getValorTaxa());
 		System.out.println("Saque no valor de R$" + valorInseridoComTaxa + " realizado com sucesso!");
 		return true;
 
@@ -65,6 +67,7 @@ public abstract class Conta implements metodosConta {
 		double valorInseridoComTaxa = (valorInserido - TipoTaxa.DEPOSITO.getValorTaxa());
 		this.saldo += valorInseridoComTaxa;
 		this.valorGastoDeposito += TipoTaxa.DEPOSITO.getValorTaxa();
+		Presidente.somarCapital(TipoTaxa.DEPOSITO.getValorTaxa());
 		System.out.println("Depósito no valor de R$" + valorInseridoComTaxa + " realizado com sucesso!");
 
 	}
@@ -83,6 +86,7 @@ public abstract class Conta implements metodosConta {
 		this.saldo -= valorInseridoComTaxa;
 		contaInserida.saldo += valorInseridoComTaxa;
 		valorGastoTransferencia += valorInserido;
+		Presidente.somarCapital(TipoTaxa.TRANSFERENCIA.getValorTaxa());
 		System.out.println("Transferência no valor de R$" + valorInseridoComTaxa + " para " + contaInserida.getUsuario().getNome() + " concluída!");
 		return true;
 
@@ -91,5 +95,6 @@ public abstract class Conta implements metodosConta {
 	public double getSaldo() {
 		return saldo;
 	}
+
 
 }
