@@ -8,7 +8,7 @@ import br.com.serratec.interfaces.metodosConta;
 public abstract class Conta implements metodosConta {
 	private Usuario usuario;
 	private int agencia;
-	private int idConta;
+	private String idConta;
 	private char tipoConta;
 	private double saldo;
 
@@ -17,7 +17,7 @@ public abstract class Conta implements metodosConta {
 	protected double valorGastoTransferencia;
 	
 
-	public Conta(Usuario usuario, int agencia, int idConta, char tipoConta) {
+	public Conta(Usuario usuario, int agencia, String idConta, char tipoConta) {
 		this.usuario = usuario;
 		this.agencia = agencia;
 		this.idConta = idConta;
@@ -36,7 +36,7 @@ public abstract class Conta implements metodosConta {
 		return usuario;
 	}
 
-	public int getIdConta() {
+	public String getIdConta() {
 		return idConta;
 	}
 
