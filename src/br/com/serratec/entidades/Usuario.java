@@ -7,7 +7,6 @@ public abstract class Usuario {
 	protected String nome;
 	protected String cpf;
 	protected String senha;
-
 	public Usuario(String nome, String cpf, String senha) throws DocumentoInvalido {
 		this.nome = nome;
 		this.cpf = ValidarCpf.validarCpf(cpf);
@@ -33,8 +32,6 @@ public abstract class Usuario {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	
-	
 	
 	
 }
