@@ -10,7 +10,7 @@ import br.com.serratec.excecoes.valorInvalidoException;
 
 public class ContaPoupanca extends Conta {
 
-	public ContaPoupanca(Usuario usuario, int agencia, int idConta, char tipoConta) {
+	public ContaPoupanca( int agencia, String idConta, char tipoConta, Usuario usuario) {
 		super(usuario, agencia, idConta, tipoConta);
 
 	}
