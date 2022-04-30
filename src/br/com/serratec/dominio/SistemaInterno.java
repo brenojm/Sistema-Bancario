@@ -5,51 +5,45 @@ import java.util.Scanner;
 
 import br.com.serratec.entidades.Cliente;
 import br.com.serratec.entidades.Conta;
+import br.com.serratec.entidades.ContaCorrente;
+import br.com.serratec.entidades.ContaPoupanca;
 import br.com.serratec.entidades.Funcionario;
 import br.com.serratec.entidades.Usuario;
 import br.com.serratec.excecoes.CadastroJaExisteException;
 import br.com.serratec.excecoes.CadastroNaoExisteException;
+import br.com.serratec.excecoes.ContaInvalidaException;
 import br.com.serratec.excecoes.DocumentoInvalido;
+import br.com.serratec.excecoes.valorInvalidoException;
 import br.com.serratec.repositorios.RepositorioUsuario;
 import br.com.serratec.validador.ValidarCpf;
 import br.com.serratec.entidades.Gerente;
 import br.com.serratec.entidades.Diretor;
 import br.com.serratec.entidades.Presidente;
+import br.com.serratec.repositorios.RepositorioContaCorrente;
+import br.com.serratec.repositorios.RepositorioContaPoupanca;
 public class SistemaInterno {
 	
-	public static void main(String[] args) throws DocumentoInvalido, CadastroNaoExisteException {	
+	public static void main(String[] args) throws DocumentoInvalido, CadastroNaoExisteException, valorInvalidoException, ContaInvalidaException {	
 		Scanner leitor = new Scanner(System.in);
 		Usuario usuario=Login(leitor);
 		System.out.println("Login efetuado com sucesso!");
-		
-		//Pode-se fazer em boolen----- private boolean clienteOuFuncionario=(usuario.getClass() == Cliente.class)
-		
-		if(usuario.getClass() == Cliente.class) {
-			System.out.println("Fazer o login de cliente aqui");
-			mostraMenuInicial;
-		}
-		if(usuario.getClass() == Gerente.class) {
-			System.out.println("Fazer o login de gerente aqui");
-		}
-		if(usuario.getClass() == Diretor.class) {
-			System.out.println("Fazer o login de Diretor aqui");
-		}
-		if(usuario.getClass() == Presidente.class) {
-			System.out.println("Fazer o login de Presidente aqui");
-		}
+
+			System.out.println("Fazer os logins aqui");
+			mostraMenuInicial(leitor,descobirTipoConta(usuario));
+
 	}
 		
 		//Passar conta para o menu para que sejam chamados os metodos do menu
 	
-	public static void mostraMenuInicial(Scanner leitor) {
+	public static void mostraMenuInicial(Scanner leitor, Conta tipoconta) throws valorInvalidoException, DocumentoInvalido, ContaInvalidaException, CadastroNaoExisteException {
 		int opcao = leitorOpcao(leitor, 2, "1 - Movimentações na conta" + "\n2 - Relatórios" + "\n0 - Sair" + "\nInsira sua escolha: ");
 
 		switch (opcao) {
 		case 1:
-			mostraMenuMovimentacao(leitor);//adicionar conta
+			mostraMenuMovimentacao(leitor, tipoconta);
 			break;
 		case 2:
-			mostraMenuRelatorio(leitor);//adicionar conta
+			mostraMenuRelatorio(leitor, tipoconta);
 			break;
 			
 		default:
@@ -58,18 +52,38 @@ public class SistemaInterno {
 		}
 	}
 	
-	public static void mostraMenuMovimentacao(Scanner leitor, Conta conta) {
+	public static void mostraMenuMovimentacao(Scanner leitor, Conta conta) throws valorInvalidoException, DocumentoInvalido, ContaInvalidaException, CadastroNaoExisteException {
 		int opcao = leitorOpcao(leitor, 3, "1 - Saque" + "\n2 - Depósito" + "\n3 - Transfêrencia" + "\n0 - Sair" + "\nInsira sua escolha: ");
-
 		switch (opcao) {
 		case 1:
-			conta.sacar()
+			System.out.println("Insira o valor que deseja sacar: ");
+			double valorInseridoSaque = leitor.nextDouble();
+			conta.sacar(valorInseridoSaque);
 			break;
 		case 2:
-			conta.depositar();
+			System.out.println("Insira o valor que deseja depositar: ");
+			double valorInseridoDeposito = leitor.nextDouble();
+			conta.depositar(valorInseridoDeposito);
 			break;
 		case 3:
-			conta.transferencia();//Passar id da conta para fazer a transferencia
+			System.out.println("Insira o valor que deseja transferir: ");
+			double valorInseridoTransferencia = leitor.nextDouble();
+			System.out.println("Insira o cpf do remetente: ");
+			String cpf = ValidarCpf.validarCpf(leitor.nextLine());
+			int tipo=leitorOpcao(leitor, 2, "Escolha o tipo de conta do remetente \n1 - Conta corrente \n2 - Conta poupança");
+			char tipoContaRecebe='0';
+			switch(tipo) {
+			case 1:
+				tipoContaRecebe='c';
+				break;
+			case 2:
+				tipoContaRecebe='p';
+				break;
+			default:
+				System.exit(0);
+				break;
+			}
+			conta.transferencia(valorInseridoTransferencia, cpf, tipoContaRecebe);//Passar id da conta para fazer a transferencia
 			break;
 		default:
 			System.out.println("Sair");
@@ -78,21 +92,81 @@ public class SistemaInterno {
 	}
 	
 	public static void mostraMenuRelatorio(Scanner leitor, Conta conta) {
-		int opcao = leitorOpcao(leitor, 3, "1 - Saldo" + "\n2 - Tributação Conta Corrente" + "\n3 - Rendimento Conta Poupança" + "\n0 - Sair" + "\nInsira sua escolha: ");
-
-		switch (opcao) {
-		case 1:
-			conta.getSaldo();
-			break;
-		case 2:
-			//Tributação Conta Corrente
-			break;
-		case 3:
-			//Rendimento Conta Poupança
-			break;
-		default:
-			System.out.println("Sair");
-			System.exit(0);
+		if(conta instanceof ContaCorrente) {
+			if(conta.getUsuario() instanceof Cliente) {
+				int opcao = leitorOpcao(leitor, 3, "1 - Saldo" + "\n2 - Tributação Conta Corrente" + "\n0 - Sair" + "\nInsira sua escolha: ");
+				switch (opcao) {
+				case 1:
+					conta.getSaldo();
+					break;
+				case 2:
+					((ContaCorrente) conta).TributacaoContaCorrente();
+					break;
+				default:
+					System.out.println("Sair");
+					System.exit(0);
+				}
+			}else if(conta.getUsuario() instanceof Gerente) {
+				int opcao = leitorOpcao(leitor, 3, "1 - Saldo" + "\n2 - Tributação Conta Corrente" +"\n3- Relatorio do número de clientes em sua agencia " +"\n0 - Sair" + "\nInsira sua escolha: ");
+				switch (opcao) {
+				case 1:
+					conta.getSaldo();
+					break;
+				case 2:
+					((ContaCorrente) conta).TributacaoContaCorrente();
+					break;
+				case 3:
+					Gerente usuario=(Gerente) conta.getUsuario();
+					usuario.relatorioClientes(usuario.getAgencia());
+					break;
+				default:
+					System.out.println("Sair");
+					System.exit(0);
+				}
+			}else if(conta.getUsuario() instanceof Diretor) {
+				int opcao = leitorOpcao(leitor, 3, "1 - Saldo" + "\n2 - Tributação Conta Corrente" +"\n3- Relatorio do número de clientes no banco"+"\n4- Lista dos clientes"+ "\n0 - Sair" + "\nInsira sua escolha: ");
+				switch (opcao) {
+				case 1:
+					conta.getSaldo();
+					break;
+				case 2:
+					((ContaCorrente) conta).TributacaoContaCorrente();
+					break;
+				case 3:
+					System.out.println("O número total de cliente no banco é: "+RepositorioUsuario.getQuantidadeTotal());
+					break;
+				case 4:
+					System.out.println("-----------------LISTA CLIENTES-----------------");
+					RepositorioUsuario.listaAlfabetica();
+					break;
+				default:
+					System.out.println("Sair");
+					System.exit(0);
+				}
+			}
+			else if(conta.getUsuario() instanceof Presidente) {
+				int opcao = leitorOpcao(leitor, 3, "1 - Saldo" + "\n2 - Tributação Conta Corrente" +"\n3- Relatorio do número de clientes no banco"+"\n4- Lista dos clientes"+"\n5- Total de Capital no banco "+ "\n0 - Sair" + "\nInsira sua escolha: ");
+				switch (opcao) {
+				case 1:
+					conta.getSaldo();
+					break;
+				case 2:
+					((ContaCorrente) conta).TributacaoContaCorrente();
+					break;
+				case 3:
+					System.out.println("O número total de cliente no banco é: "+RepositorioUsuario.getQuantidadeTotal());
+					break;
+				case 4:
+					System.out.println("-----------------LISTA CLIENTES-----------------");
+					RepositorioUsuario.listaAlfabetica();
+					break;
+				case 5:
+					System.out.println("Total de capital: R$"+Presidente.getCapitalTotalBanco());
+				default:
+					System.out.println("Sair");
+					System.exit(0);
+				}
+			}
 		}
 	}
 	
@@ -139,9 +213,32 @@ public class SistemaInterno {
 		
 	}
 	
-	public static Conta VerificarTipo() {
-		if()
-		return null;
+	public static Conta descobirTipoConta(Usuario usuario) {
+		Scanner leitor = new Scanner(System.in);
+		
+		ContaCorrente contaCorrente = RepositorioContaCorrente.getMapaContaCorrenteCpf(usuario.getCpf());
+		ContaPoupanca contaPoupanca = RepositorioContaPoupanca.getMapaContaPoupancaCpf(usuario.getCpf());
+		Conta tipoconta = contaCorrente;
+		if(contaCorrente!=null && contaPoupanca!=null) {
+			int opcao = leitorOpcao(leitor,2,"Escolha a conta que deseja usar: \n1 - Conta corrente \n2 - Conta poupanca");
+			leitor.close();
+			switch(opcao) {
+			case 1:
+				tipoconta= contaCorrente;
+				break;
+			case 2:
+				tipoconta= contaPoupanca;
+				break;
+			default:
+				System.exit(0);
+				break;
+			}
+		}else if(contaCorrente!=null) {
+			tipoconta= contaCorrente;
+		}else if(contaPoupanca!= null) {
+			tipoconta= contaPoupanca;
+		}
+		return tipoconta;
 		
 	}
 }

@@ -5,6 +5,7 @@ import java.util.Scanner;
 import br.com.serratec.entidades.Cliente;
 import br.com.serratec.entidades.Diretor;
 import br.com.serratec.entidades.Funcionario;
+import br.com.serratec.entidades.Gerente;
 import br.com.serratec.entidades.Usuario;
 import br.com.serratec.excecoes.CadastroJaExisteException;
 import br.com.serratec.excecoes.CadastroNaoExisteException;
@@ -19,12 +20,16 @@ public class teste2 {
 		UsuariosLoader();
 		//Usuario usuario=Login(leitor);
 		System.out.println("Login efetuado com sucesso!");
-		Usuario usuario1 = new Cliente("João","12345678901","12345");
-		if(usuario1.getClass() == Diretor.class) {
-			System.out.println("asasa");
-		}else {
-			System.out.println("waa");
-		}
+		Usuario usuario1 = new Cliente("Joao","12345678901","12345");
+		Usuario usuario2 = new Cliente("Amanda","12345678931","12345");
+		RepositorioUsuario.adicionaUsuario(usuario1);
+		RepositorioUsuario.adicionaUsuario(usuario2);
+		//if(usuario1 instanceof Diretor) {
+		//	System.out.println("sim");
+		//}else {
+		//	System.out.println("nao");
+		//}
+		RepositorioUsuario.listaAlfabetica();
 		//switch(usuario.getClass() = ) {
 		
 		//}
