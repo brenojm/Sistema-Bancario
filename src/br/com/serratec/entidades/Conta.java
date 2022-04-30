@@ -1,9 +1,12 @@
 package br.com.serratec.entidades;
 
 import br.com.serratec.enums.TipoTaxa;
+import br.com.serratec.excecoes.CadastroNaoExisteException;
 import br.com.serratec.excecoes.ContaInvalidaException;
 import br.com.serratec.excecoes.valorInvalidoException;
 import br.com.serratec.interfaces.metodosConta;
+import br.com.serratec.repositorios.RepositorioContaCorrente;
+import br.com.serratec.repositorios.RepositorioContaPoupanca;
 
 public abstract class Conta implements metodosConta {
 	private Usuario usuario;
@@ -16,7 +19,6 @@ public abstract class Conta implements metodosConta {
 	protected double valorGastoDeposito;
 	protected double valorGastoTransferencia;
 	
-
 	public Conta(Usuario usuario, int agencia, String idConta, char tipoConta) {
 		this.usuario = usuario;
 		this.agencia = agencia;
@@ -43,9 +45,11 @@ public abstract class Conta implements metodosConta {
 	public char getTipoConta() {
 		return tipoConta;
 	}
-	
+	public String getCpfPorUsuario(){
+		return usuario.getCpf();
+	}
 	@Override
-	public boolean sacar(double valorInserido) throws valorInvalidoException {
+	public void sacar(double valorInserido) throws valorInvalidoException {
 
 		if (valorInserido <= 0 && valorInserido > this.saldo) {
 			throw new valorInvalidoException();
@@ -55,8 +59,6 @@ public abstract class Conta implements metodosConta {
 		this.valorGastoSaque += valorInserido;
 		Presidente.somarCapital(TipoTaxa.SAQUE.getValorTaxa());
 		System.out.println("Saque no valor de R$" + valorInseridoComTaxa + " realizado com sucesso!");
-		return true;
-
 	}
 	
 	@Override
@@ -73,28 +75,29 @@ public abstract class Conta implements metodosConta {
 	}
 	
 	@Override
-	public boolean transferencia(double valorInserido, Conta contaInserida) throws valorInvalidoException, ContaInvalidaException {
-
+	public void transferencia(double valorInserido, String cpf, char tipoContaDoRecebe) throws valorInvalidoException, ContaInvalidaException, CadastroNaoExisteException {
+		Conta contaInserida = null;
 		if (valorInserido <= 0 && valorInserido > this.saldo) {
 			throw new valorInvalidoException();
-		} else if (contaInserida == null) {
+		} else if (tipoContaDoRecebe=='c' && RepositorioContaCorrente.retornaContaCorrente(cpf) != null) {
 			throw new ContaInvalidaException();
-			//TODO ContaInserida deve ser verificada se existe
+		} else if(tipoContaDoRecebe=='p' && RepositorioContaPoupanca.retornaContaPoupanca(cpf) != null) {
+			throw new ContaInvalidaException();
 		}
-		
+		if(tipoContaDoRecebe=='c') {
+			contaInserida= RepositorioContaCorrente.retornaContaCorrente(cpf);
+		}else if(tipoContaDoRecebe=='p'){
+			contaInserida= RepositorioContaPoupanca.retornaContaPoupanca(cpf);
+		}
 		double valorInseridoComTaxa = (valorInserido - TipoTaxa.TRANSFERENCIA.getValorTaxa());
 		this.saldo -= valorInseridoComTaxa;
 		contaInserida.saldo += valorInseridoComTaxa;
 		valorGastoTransferencia += valorInserido;
 		Presidente.somarCapital(TipoTaxa.TRANSFERENCIA.getValorTaxa());
 		System.out.println("Transferência no valor de R$" + valorInseridoComTaxa + " para " + contaInserida.getUsuario().getNome() + " concluída!");
-		return true;
-
 	}
 
 	public double getSaldo() {
 		return saldo;
 	}
-
-
 }

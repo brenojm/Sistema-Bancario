@@ -4,6 +4,9 @@ public interface Relatorios {
 	
 	public int numeroContas();
 	
-	public String relatorioClientes();
+	public int relatorioClientes();
+	
+	public String listaAlfabetica();
+
 	
 }

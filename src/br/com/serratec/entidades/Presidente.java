@@ -1,6 +1,8 @@
 package br.com.serratec.entidades;
 
 import br.com.serratec.excecoes.DocumentoInvalido;
+import br.com.serratec.repositorios.RepositorioContaCorrente;
+import br.com.serratec.repositorios.RepositorioContaPoupanca;
 
 public class Presidente extends Funcionario{
 
@@ -21,9 +23,8 @@ public class Presidente extends Funcionario{
 		capitalTaxa += taxaInserida;
 	}
 	
-	public double getCapitalTotalBanco() {
-		return capitalTotalBanco;
+	public static double getCapitalTotalBanco() {
+		return RepositorioContaCorrente.getCapitalCorrente()+RepositorioContaPoupanca.getCapitalPoupanca()+getCapitalTaxa();
 	}
-
 	
 }
