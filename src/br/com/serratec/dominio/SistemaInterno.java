@@ -26,6 +26,7 @@ public class SistemaInterno {
 		
 		if(usuario.getClass() == Cliente.class) {
 			System.out.println("Fazer o login de cliente aqui");
+			mostraMenuInicial;
 		}
 		if(usuario.getClass() == Gerente.class) {
 			System.out.println("Fazer o login de gerente aqui");
@@ -137,5 +138,10 @@ public class SistemaInterno {
 		}while(true);
 		
 	}
-
+	
+	public static Conta VerificarTipo() {
+		if()
+		return null;
+		
+	}
 }
