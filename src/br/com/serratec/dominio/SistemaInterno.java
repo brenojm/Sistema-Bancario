@@ -27,8 +27,10 @@ public class SistemaInterno {
 		Scanner leitor = new Scanner(System.in);
 		Usuario usuario=Login(leitor);
 		System.out.println("Login efetuado com sucesso!");
+
 			System.out.println("Fazer os logins aqui");
 			mostraMenuInicial(leitor,descobirTipoConta(usuario));
+
 	}
 		
 		//Passar conta para o menu para que sejam chamados os metodos do menu
