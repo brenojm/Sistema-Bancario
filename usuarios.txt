@@ -1,28 +1,28 @@
-João da Silva;12135745879;1234;gerente;7894
+João da Silva;12135745879;1234;gerente;1234
 Gabriel Guimarães;17845612366;5555;presidente
 Cauã Mello;14526978994;4569;diretor
-Jorge Bernardes;17256987432;java123
-Alan Cunha;17845277922;abc;gerente;9863
+Jorge Bernardes;17256987432;java123;null
+Alan Cunha;17845277922;abc;gerente;4321
 Lucas Ribeiro;16974563244;lucas1010;presidente
 Kaique Paixão da Costa;14577763277;eclipse;diretor
-Jonas Cabral da Silva;23045066978;jonas123
-Ana Maria Braga;45678912322;1234;gerente;1456
+Jonas Cabral da Silva;23045066978;jonas123;null
+Ana Maria Braga;45678912322;1234;gerente;7883
 Alana Carvalho Souza;78914523695;2211;presidente
 Maria Clara Nunes;34569874511;canogol;diretor
-Marcela Pires Fonseca;67814255974;123
-Joana Cabral;63245789412;1010;gerente;2231
+Marcela Pires Fonseca;67814255974;123;null
+Joana Cabral;63245789412;1010;gerente;7883
 Virginia da Cruz;44412378956;bbb;presidente
 João Marcos;94567812455;serratec;diretor
-Barbara Fox;17244457896;neymar2015
-Bernardo Kreischer;24578963211;123789;gerente;2248
+Barbara Fox;17244457896;neymar2015;null
+Bernardo Kreischer;24578963211;123789;gerente;1234
 Breno Lopes;17122234569;futebol;presidente
 Maria Aparecida Rocha;12378945611;1020;diretor
-Felipe da Cunha;18923245611;fefe123
-Casemiro de Abreu;12478945622;112288;gerente;4798
+Felipe da Cunha;18923245611;fefe123;null
+Casemiro de Abreu;12478945622;112288;gerente;3533
 Fernando Jorge Magno;14577798563;fifa22;presidente
 Amanda Castro;22014568933;10122004;diretor
-Leticia Cabral;17345871234;serratec2022
-Diego Magno;23075412321;123456789;gerente;7892
+Leticia Cabral;17345871234;serratec2022;null
+Diego Magno;23075412321;123456789;gerente;4321
 Natália Nogueira;12036078945;221030;presidente
 Pedro Amaral Jesus;74122345789;5566;diretor
-Gustavo Henrique Souza;17645896411;basquete
+Gustavo Henrique Souza;17645896411;basquete;null

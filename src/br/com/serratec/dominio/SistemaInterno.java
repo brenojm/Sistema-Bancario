@@ -1,5 +1,6 @@
 package br.com.serratec.dominio;
 
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -14,6 +15,7 @@ import br.com.serratec.excecoes.CadastroNaoExisteException;
 import br.com.serratec.excecoes.ContaInvalidaException;
 import br.com.serratec.excecoes.DocumentoInvalido;
 import br.com.serratec.excecoes.valorInvalidoException;
+import br.com.serratec.manipuladores.ManipuladorUsuarios;
 import br.com.serratec.repositorios.RepositorioUsuario;
 import br.com.serratec.validador.ValidarCpf;
 import br.com.serratec.entidades.Gerente;
@@ -23,7 +25,8 @@ import br.com.serratec.repositorios.RepositorioContaCorrente;
 import br.com.serratec.repositorios.RepositorioContaPoupanca;
 public class SistemaInterno {
 	
-	public static void main(String[] args) throws DocumentoInvalido, CadastroNaoExisteException, valorInvalidoException, ContaInvalidaException {	
+	public static void main(String[] args) throws DocumentoInvalido, CadastroNaoExisteException, valorInvalidoException, ContaInvalidaException, CadastroJaExisteException, IOException {
+		ManipuladorUsuarios.arquivoUsuarioloader();
 		Scanner leitor = new Scanner(System.in);
 		Usuario usuario=Login(leitor);
 		System.out.println("Login efetuado com sucesso!");
@@ -32,9 +35,6 @@ public class SistemaInterno {
 			mostraMenuInicial(leitor,descobirTipoConta(usuario));
 
 	}
-		
-		//Passar conta para o menu para que sejam chamados os metodos do menu
-	
 	public static void mostraMenuInicial(Scanner leitor, Conta tipoconta) throws valorInvalidoException, DocumentoInvalido, ContaInvalidaException, CadastroNaoExisteException {
 		int opcao = leitorOpcao(leitor, 2, "1 - Movimentações na conta" + "\n2 - Relatórios" + "\n0 - Sair" + "\nInsira sua escolha: ");
 
