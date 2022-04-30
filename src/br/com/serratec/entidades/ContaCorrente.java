@@ -4,8 +4,8 @@ import br.com.serratec.enums.TipoTaxa;
 
 public final class ContaCorrente extends Conta {
 
-	public ContaCorrente(Usuario usuario, int agencia, int idConta, char tipoConta) {
-		super(usuario, agencia, idConta, tipoConta);
+	public ContaCorrente( int agencia, String idConta, char tipoConta, Usuario usuario) {
+		super(usuario, agencia, idConta,tipoConta );
 	}
 	//TODO Mostrar se o cliente tem seguro de vida no relatorio
 
