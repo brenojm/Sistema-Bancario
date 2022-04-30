@@ -12,19 +12,33 @@ import br.com.serratec.excecoes.CadastroNaoExisteException;
 import br.com.serratec.excecoes.DocumentoInvalido;
 import br.com.serratec.repositorios.RepositorioUsuario;
 import br.com.serratec.validador.ValidarCpf;
+import br.com.serratec.entidades.Gerente;
+import br.com.serratec.entidades.Diretor;
+import br.com.serratec.entidades.Presidente;
 public class SistemaInterno {
 	
 	public static void main(String[] args) throws DocumentoInvalido, CadastroNaoExisteException {	
 		Scanner leitor = new Scanner(System.in);
 		Usuario usuario=Login(leitor);
 		System.out.println("Login efetuado com sucesso!");
-		if(usuario.getClass()== Funcionario.class)
-		switch(usuario.getClass() = ) {
 		
+		//Pode-se fazer em boolen----- private boolean clienteOuFuncionario=(usuario.getClass() == Cliente.class)
+		
+		if(usuario.getClass() == Cliente.class) {
+			System.out.println("Fazer o login de cliente aqui");
 		}
+		if(usuario.getClass() == Gerente.class) {
+			System.out.println("Fazer o login de gerente aqui");
+		}
+		if(usuario.getClass() == Diretor.class) {
+			System.out.println("Fazer o login de Diretor aqui");
+		}
+		if(usuario.getClass() == Presidente.class) {
+			System.out.println("Fazer o login de Presidente aqui");
+		}
+	}
 		
 		//Passar conta para o menu para que sejam chamados os metodos do menu
-	}
 	
 	public static void mostraMenuInicial(Scanner leitor) {
 		int opcao = leitorOpcao(leitor, 2, "1 - Movimentações na conta" + "\n2 - Relatórios" + "\n0 - Sair" + "\nInsira sua escolha: ");
