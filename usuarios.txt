@@ -1,4 +1,7 @@
 João da Silva;12345678901;1234;null
 Maria Conceição;09876543211;4321;gerente;1234
-Vitor diaz;12345678900;amor;diretor
+Vitor Diaz;12345678900;amor;diretor
 Camilla Oliveira;02345678900;odio;presidente
+Pedro Oliveira;17252374512;1010;null
+Juliano Marques;17689425310;2020;null
+Jonas Cabral;25064112444;3030;null
