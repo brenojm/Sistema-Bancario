@@ -16,6 +16,7 @@ import br.com.serratec.excecoes.CadastroJaExisteException;
 import br.com.serratec.excecoes.CadastroNaoExisteException;
 import br.com.serratec.excecoes.ContaInvalidaException;
 import br.com.serratec.excecoes.DocumentoInvalido;
+import br.com.serratec.excecoes.SaldoInsuficienteException;
 import br.com.serratec.excecoes.jaContemSeguroException;
 import br.com.serratec.excecoes.valorInvalidoException;
 import br.com.serratec.manipuladores.ManipuladorContas;
@@ -28,7 +29,7 @@ import br.com.serratec.validador.ValidarCpf;
 public class SistemaInterno {
 
 	public static void main(String[] args) throws DocumentoInvalido, CadastroNaoExisteException, valorInvalidoException,
-			ContaInvalidaException, CadastroJaExisteException, IOException, jaContemSeguroException {
+			ContaInvalidaException, CadastroJaExisteException, IOException, jaContemSeguroException, SaldoInsuficienteException {
 		Scanner leitor = new Scanner(System.in);
 		try {
 			ManipuladorUsuarios.arquivoUsuarioloader();
@@ -37,7 +38,14 @@ public class SistemaInterno {
 			Usuario usuario = Login(leitor);
 			System.out.println("Login efetuado com sucesso!");
 
-			mostraMenuInicial(leitor, usuario);
+			do {
+				mostraMenuInicial(leitor, usuario);
+
+				Usuario usuarioNovo = Login(leitor);
+
+				mostraMenuInicial(leitor, usuarioNovo);
+
+			} while (true);
 
 		} catch (DocumentoInvalido e) {
 			System.out.println(e.getMessage());
@@ -51,35 +59,14 @@ public class SistemaInterno {
 			System.out.println(e.getMessage());
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
-		} catch (jaContemSeguroException e) {
-			System.out.println(e.getMessage());
-		}
-
-		try {
-
-			do {
-
-				Usuario usuarioNovo = Login(leitor);
-
-				mostraMenuInicial(leitor, usuarioNovo);
-
-			} while (true);
-		} catch (DocumentoInvalido e) {
-			System.out.println(e.getMessage());
-		} catch (CadastroNaoExisteException e) {
-			System.out.println(e.getMessage());
-		} catch (valorInvalidoException e) {
-			System.out.println(e.getMessage());
-		} catch (ContaInvalidaException e) {
-			System.out.println(e.getMessage());
-		} catch (jaContemSeguroException e) {
+		} catch (SaldoInsuficienteException e) {
 			System.out.println(e.getMessage());
 		}
 
 	}
 
 	public static void mostraMenuInicial(Scanner leitor, Usuario usuario) throws valorInvalidoException,
-			DocumentoInvalido, ContaInvalidaException, CadastroNaoExisteException, jaContemSeguroException {
+			DocumentoInvalido, ContaInvalidaException, CadastroNaoExisteException, jaContemSeguroException, SaldoInsuficienteException {
 		int opcaoLogout;
 		Conta tipoconta = descobrirTipoConta(usuario, leitor);
 		if (usuario instanceof Cliente) {
@@ -94,22 +81,21 @@ public class SistemaInterno {
 					mostraMenuRelatorio(leitor, tipoconta);
 					break;
 				case 3:
-					if (((Cliente) usuario).ContemSegurodeVida() == true) {
-						System.out.println(
-								"O valor do seu seguro de vida é de: R$" + ((Cliente) usuario).getValorSeguro());
-					} else {
-						int opcaoSeguro = leitorOpcao(leitor, 2,
-								"Deseja contratar um seguro de vida? \n1 - Sim \n2 - Não \nInsira sua escolha:");
-						if (opcaoSeguro == 1) {
-							System.out.println("Insira o valor do seguro de vida:");
-							double valorInseridoSeguro = leitor.nextDouble();
-							leitor.nextLine();
-							((Cliente) usuario).ContrataSeguro(valorInseridoSeguro, tipoconta);
+					
+						if (((Cliente) usuario).ContemSegurodeVida() == true) {
+							System.out.println(
+									"O valor do seu seguro de vida é de: R$" + ((Cliente) usuario).getValorSeguro());
 						} else {
-							break;
+
+							int opcaoSeguro = leitorOpcao(leitor, 2,
+									"Deseja contratar um seguro de vida? \n1 - Sim \n2 - Não \nInsira sua escolha:");
+							if (opcaoSeguro == 1) {
+								((Cliente) usuario).ContrataSeguro(tipoconta, leitor);
+							} else {
+								break;
+							}
 						}
-					}
-					break;
+					
 				case 4:
 					break;
 				default:
@@ -224,7 +210,7 @@ public class SistemaInterno {
 			} else if (conta.getUsuario() instanceof Diretor) {
 				int opcao = leitorOpcao(leitor, 4,
 						"1 - Saldo" + "\n2 - Tributação Conta Corrente"
-								+ "\n3 - Relatorio do número de clientes no banco" + "\n4 1- Lista dos clientes"
+								+ "\n3 - Relatorio do número de clientes no banco" + "\n4 - Lista dos clientes"
 								+ "\n0 - Sair" + "\nInsira sua escolha: ");
 				switch (opcao) {
 				case 1:
