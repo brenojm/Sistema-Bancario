@@ -13,6 +13,10 @@ public abstract class Usuario {
 		this.senha = senha;
 	}
 
+	@Override
+	public String toString() {
+		return "Usuario [nome=" + nome + ", cpf=" + cpf + "]";
+	}
 	public String getNome() {
 		return nome;
 	}

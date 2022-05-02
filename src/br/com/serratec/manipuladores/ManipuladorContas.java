@@ -21,7 +21,7 @@ import br.com.serratec.repositorios.RepositorioContaPoupanca;
 import br.com.serratec.repositorios.RepositorioUsuario;
 
 public class ManipuladorContas {
-		public static void arquivoContasloader(String cpf, ContaCorrente ContaCorrente, ContaPoupanca ContaPoupanca) throws CadastroNaoExisteException, IOException, CadastroJaExisteException{
+		public static void arquivoContasloader() throws CadastroNaoExisteException, IOException, CadastroJaExisteException{
 	        	File arquivoContas = new File("contas.txt");
 
 	        	FileReader leitorContas = null;
@@ -38,16 +38,17 @@ public class ManipuladorContas {
 
 	            int agencia = Integer.parseInt(contaVetor[0]);
 	            String idConta = contaVetor[1];
-	            char tipoConta = valueOf(contaVetor[2]);
-	            Usuario usuario = RepositorioUsuario.retornaUsuario(cpf) ;
-	            
+	            char tipoConta = contaVetor[2].charAt(0);
+	            String usuariocpf=contaVetor[3];
+	            Usuario usuario = RepositorioUsuario.retornaUsuario(usuariocpf);
+	            //if(RepositorioContaCorrente.retornaContaCorrente(usuariocpf))
 	        	if(tipoConta == 'c') {
 	        	Conta conta = new ContaCorrente(agencia, idConta, tipoConta, usuario);	
-	            RepositorioContaCorrente.adicionaContaCorrente(ContaCorrente);
+	            RepositorioContaCorrente.adicionaContaCorrente(conta);
 	        	}
 	        	if(tipoConta == 'p') {
 	        	Conta conta = new ContaPoupanca(agencia, idConta, tipoConta,usuario);
-	        	RepositorioContaPoupanca.adicionaConta(ContaPoupanca);
+	        	RepositorioContaPoupanca.adicionaConta(conta);
 	        	}
 		}while(true);
 	        	
@@ -55,9 +56,4 @@ public class ManipuladorContas {
 	        	leitorContasbr.close();
 	        
 				}
-				private static char valueOf(String string) {
-					
-					return 0;
-				}
-
 }

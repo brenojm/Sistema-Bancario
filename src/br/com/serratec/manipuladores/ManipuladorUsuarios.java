@@ -34,7 +34,7 @@ public class ManipuladorUsuarios {
             String cpf = usuarioVetor[1];
             String senha = usuarioVetor[2];
             String cargo = usuarioVetor[3];
-            //int agencia = Integer.parseInt(usuarioVetor[4]);
+           
             if(cargo.equals("gerente")) {
             int agencia = Integer.parseInt(usuarioVetor[4]);
             Usuario usuario = new Gerente (nome, cpf, senha, cargo, agencia);
@@ -48,7 +48,7 @@ public class ManipuladorUsuarios {
 			Usuario usuario = new Diretor (nome, cpf, senha, cargo);
 			RepositorioUsuario.adicionaUsuario(usuario);
 			}
-			if(cargo.equals(null)) {
+			if(cargo.equals("null")) { 
 			Usuario usuario = new Cliente (nome, cpf, senha);
 			RepositorioUsuario.adicionaUsuario(usuario);
 			}

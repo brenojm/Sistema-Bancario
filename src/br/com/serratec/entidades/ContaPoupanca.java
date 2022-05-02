@@ -20,22 +20,20 @@ public class ContaPoupanca extends Conta {
 				throw new valorInvalidoException();
 			}
 			
-			
-			
-		try {
+		//try {
 			
 			DateTimeFormatter formatoDataBrasil = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 			LocalDate dataInseridaInicial = LocalDate.parse(dataInicialString, formatoDataBrasil);
 			LocalDate dataInseridaFinal = LocalDate.parse(dataFinalString, formatoDataBrasil);
 			if(1 <= dataInseridaFinal.getMonthValue() - dataInseridaInicial.getMonthValue()) {
-				throw new PeriodoInvalidoException();
+				//throw new PeriodoInvalidoException();
 			}
-			if(dataInseridaInicial.isBefore(LocalDate.now())) {
-				throw new DataParseException();
-			}
-			if(dataInseridaFinal.isBefore(dataInseridaInicial)) {
-				throw new DataParseException();
-			}
+//			if(dataInseridaInicial.isBefore(LocalDate.now())) {
+//				throw new DataParseException();
+//			}
+//			if(dataInseridaFinal.isBefore(dataInseridaInicial)) {
+//				throw new DataParseException();
+//			}
 			
 			int mesesInseridos = (dataInseridaFinal.getMonthValue() - dataInseridaInicial.getMonthValue());
 			double rendimentoTotal=valorInserido;
@@ -45,20 +43,20 @@ public class ContaPoupanca extends Conta {
 			}
 			
 			System.out.println("--===Simulação Rendimento da Poupança===--" +
-								"\nRendimento: R$" + rendimentoTotal +
+								"\nRendimento: R$" + String.format("%.2f",rendimentoTotal) +
 								"\nData Inicial: " + formatoDataBrasil.format(dataInseridaInicial) +
 								"\nData Final: " + formatoDataBrasil.format(dataInseridaFinal) +
 								"\nMeses: " + mesesInseridos +
-								"\nRendimento Líquido: R$" + (rendimentoTotal - valorInserido) +
-								"\nValor Inicial : R$" + valorInserido);
+								"\nRendimento Líquido: R$" + String.format("%.2f",(rendimentoTotal - valorInserido)) +
+								"\nValor Inicial : R$" + String.format("%.2f",valorInserido));
 			
 			
-		} catch (DataParseException e){
-			e.getMessage();
-		} 
-		catch (PeriodoInvalidoException e) {
-			e.getMessage();
-		}
+//		} catch (DataParseException e){
+//			e.getMessage();
+//		} 
+//		catch (PeriodoInvalidoException e) {
+//			e.getMessage();
+//		}
 		
 	}
 	
