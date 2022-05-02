@@ -31,6 +31,7 @@ public class Cliente extends Usuario{
 			throw new jaContemSeguroException();
 		}
 		this.ValorSeguro = valorSeguro;
+		conta.setSeguro(valorSeguro);
 		this.seguroDeVida = true;
 		System.out.println("Seguro de vida contratado no valor de R$" + valorSeguro);
 	}

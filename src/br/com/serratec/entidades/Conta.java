@@ -104,6 +104,10 @@ public abstract class Conta implements metodosConta {
 	public void getSaldoMenu() {
 		System.out.printf("%s%.1f%s", "Seu saldo atual é R$", saldo, "\n");
 	}
+	
+	public void setSeguro(double valorSeguro) {
+		this.saldo -= valorSeguro;
+	}
 
 	public double getSaldo() {
 		return saldo;

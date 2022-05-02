@@ -29,16 +29,35 @@ public class SistemaInterno {
 
 	public static void main(String[] args) throws DocumentoInvalido, CadastroNaoExisteException, valorInvalidoException,
 			ContaInvalidaException, CadastroJaExisteException, IOException, jaContemSeguroException {
-
+		Scanner leitor = new Scanner(System.in);
 		try {
 			ManipuladorUsuarios.arquivoUsuarioloader();
-			Scanner leitor = new Scanner(System.in);
+
 			ManipuladorContas.arquivoContasloader();
 			Usuario usuario = Login(leitor);
 			System.out.println("Login efetuado com sucesso!");
-			//Ao tentar contratar um seguro de vida e dar erro o programa finaliza
+
+			mostraMenuInicial(leitor, usuario);
+
+		} catch (DocumentoInvalido e) {
+			System.out.println(e.getMessage());
+		} catch (CadastroNaoExisteException e) {
+			System.out.println(e.getMessage());
+		} catch (valorInvalidoException e) {
+			System.out.println(e.getMessage());
+		} catch (ContaInvalidaException e) {
+			System.out.println(e.getMessage());
+		} catch (CadastroJaExisteException e) {
+			System.out.println(e.getMessage());
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		} catch (jaContemSeguroException e) {
+			System.out.println(e.getMessage());
+		}
+
+		try {
+
 			do {
-				mostraMenuInicial(leitor, usuario);
 
 				Usuario usuarioNovo = Login(leitor);
 
@@ -52,10 +71,6 @@ public class SistemaInterno {
 		} catch (valorInvalidoException e) {
 			System.out.println(e.getMessage());
 		} catch (ContaInvalidaException e) {
-			System.out.println(e.getMessage());
-		} catch (CadastroJaExisteException e) {
-			System.out.println(e.getMessage());
-		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		} catch (jaContemSeguroException e) {
 			System.out.println(e.getMessage());
