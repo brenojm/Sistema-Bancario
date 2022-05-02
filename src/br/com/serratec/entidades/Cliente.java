@@ -36,6 +36,7 @@ public class Cliente extends Usuario{
 		System.out.println("Insira o valor do seguro de vida:");
 		double valorInseridoSeguro = leitor.nextDouble();
 		leitor.nextLine();
+		valorInseridoSeguro= valorInseridoSeguro*0.8;
 		if(valorInseridoSeguro<=0 || valorInseridoSeguro>conta.getSaldo()) {
 			throw new valorInvalidoException();
 		} else if(this.ContemSegurodeVida() == true) {
@@ -51,6 +52,6 @@ public class Cliente extends Usuario{
 		} catch(jaContemSeguroException e) {
 			System.out.println(e.getMessage());
 		}
-		}while(true);
+		}while(ContemSegurodeVida()==false);
 	}
 }
