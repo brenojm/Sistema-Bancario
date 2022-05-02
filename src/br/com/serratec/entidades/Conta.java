@@ -53,7 +53,7 @@ public abstract class Conta implements metodosConta {
 	@Override
 	public void sacar(double valorInserido) throws valorInvalidoException {
 
-		if (valorInserido <= 0 && valorInserido > this.saldo) {
+		if (valorInserido <= 0 || valorInserido > this.saldo) {
 			throw new valorInvalidoException();
 		}
 		double valorInseridoComTaxa = (valorInserido - TipoTaxa.SAQUE.getValorTaxa());
@@ -65,7 +65,7 @@ public abstract class Conta implements metodosConta {
 
 	@Override
 	public void depositar(double valorInserido) throws valorInvalidoException {
-		if (valorInserido <= 0 && valorInserido > this.saldo) {
+		if (valorInserido <= 0) {
 			throw new valorInvalidoException();
 		}
 		double valorInseridoComTaxa = (valorInserido - TipoTaxa.DEPOSITO.getValorTaxa());
@@ -80,7 +80,7 @@ public abstract class Conta implements metodosConta {
 	public void transferencia(double valorInserido, String cpf, char tipoContaDoRecebe)
 			throws valorInvalidoException, ContaInvalidaException, CadastroNaoExisteException {
 		Conta contaInserida = null;
-		if (valorInserido <= 0 && valorInserido > this.saldo) {
+		if (valorInserido <= 0 || valorInserido > this.saldo) {
 			throw new valorInvalidoException();
 		} else if (tipoContaDoRecebe == 'c' && RepositorioContaCorrente.retornaContaCorrente(cpf) == null) {
 			throw new ContaInvalidaException();
