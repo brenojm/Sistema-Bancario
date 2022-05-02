@@ -1,0 +1,11 @@
+Descriçao Caso de Uso
+1- O usuário acessa página de login.
+2- O sistema exibe a página de login.
+3- O usuário fornece CPF e senha.
+4- O sistema valida as informações.
+5- O sistema informa ao usuário que o login foi feito com sucesso.
+
+Caso Alternativo
+1- O usuário não é cadastrado
+2- O sistema exibe o "O cadastro não existe".
+
