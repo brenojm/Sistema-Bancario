@@ -18,7 +18,7 @@ public abstract class Conta implements metodosConta {
 	protected double valorGastoSaque;
 	protected double valorGastoDeposito;
 	protected double valorGastoTransferencia;
-	
+
 	public Conta(Usuario usuario, int agencia, String idConta, char tipoConta) {
 		this.usuario = usuario;
 		this.agencia = agencia;
@@ -45,9 +45,11 @@ public abstract class Conta implements metodosConta {
 	public char getTipoConta() {
 		return tipoConta;
 	}
-	public String getCpfPorUsuario(){
+
+	public String getCpfPorUsuario() {
 		return usuario.getCpf();
 	}
+
 	@Override
 	public void sacar(double valorInserido) throws valorInvalidoException {
 
@@ -60,7 +62,7 @@ public abstract class Conta implements metodosConta {
 		Presidente.somarCapital(TipoTaxa.SAQUE.getValorTaxa());
 		System.out.println("Saque no valor de R$" + valorInseridoComTaxa + " realizado com sucesso!");
 	}
-	
+
 	@Override
 	public void depositar(double valorInserido) throws valorInvalidoException {
 		if (valorInserido <= 0 && valorInserido > this.saldo) {
@@ -73,36 +75,40 @@ public abstract class Conta implements metodosConta {
 		System.out.println("Depósito no valor de R$" + valorInseridoComTaxa + " realizado com sucesso!");
 
 	}
-	
+
 	@Override
-	public void transferencia(double valorInserido, String cpf, char tipoContaDoRecebe) throws valorInvalidoException, ContaInvalidaException, CadastroNaoExisteException {
+	public void transferencia(double valorInserido, String cpf, char tipoContaDoRecebe)
+			throws valorInvalidoException, ContaInvalidaException, CadastroNaoExisteException {
 		Conta contaInserida = null;
 		if (valorInserido <= 0 && valorInserido > this.saldo) {
 			throw new valorInvalidoException();
-		} else if (tipoContaDoRecebe=='c' && RepositorioContaCorrente.retornaContaCorrente(cpf) == null) {
+		} else if (tipoContaDoRecebe == 'c' && RepositorioContaCorrente.retornaContaCorrente(cpf) == null) {
 			throw new ContaInvalidaException();
-		} else if(tipoContaDoRecebe=='p' && RepositorioContaPoupanca.retornaContaPoupanca(cpf) == null) {
+		} else if (tipoContaDoRecebe == 'p' && RepositorioContaPoupanca.retornaContaPoupanca(cpf) == null) {
 			throw new ContaInvalidaException();
 		}
-		if(tipoContaDoRecebe=='c') {
-			contaInserida= RepositorioContaCorrente.retornaContaCorrente(cpf);
-		}else if(tipoContaDoRecebe=='p'){
-			contaInserida= RepositorioContaPoupanca.retornaContaPoupanca(cpf);
+		if (tipoContaDoRecebe == 'c') {
+			contaInserida = RepositorioContaCorrente.retornaContaCorrente(cpf);
+		} else if (tipoContaDoRecebe == 'p') {
+			contaInserida = RepositorioContaPoupanca.retornaContaPoupanca(cpf);
 		}
 		double valorInseridoComTaxa = (valorInserido - TipoTaxa.TRANSFERENCIA.getValorTaxa());
 		this.saldo -= valorInseridoComTaxa;
 		contaInserida.saldo += valorInseridoComTaxa;
 		valorGastoTransferencia += valorInserido;
 		Presidente.somarCapital(TipoTaxa.TRANSFERENCIA.getValorTaxa());
-		System.out.println("Transferência no valor de R$" + valorInseridoComTaxa + " para " + contaInserida.getUsuario().getNome() + " concluída!");
+		System.out.println("Transferência no valor de R$" + valorInseridoComTaxa + " para "
+				+ contaInserida.getUsuario().getNome() + " concluída!");
 	}
 
 	public void getSaldoMenu() {
-		System.out.printf("%s%.1f%s","Seu saldo atual é R$",saldo,"\n");
+		System.out.printf("%s%.1f%s", "Seu saldo atual é R$", saldo, "\n");
 	}
+
 	public double getSaldo() {
 		return saldo;
 	}
+
 	public static int getQuantidadeAgencia(int numAgencia) {
 		switch (numAgencia) {
 		case 1234:
@@ -133,5 +139,5 @@ public abstract class Conta implements metodosConta {
 	public static void aumentaQuantidadeAgencia3533() {
 		Conta.quantidadeAgencia3533++;
 	}
-	
+
 }

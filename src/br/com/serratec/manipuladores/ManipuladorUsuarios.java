@@ -15,47 +15,47 @@ import br.com.serratec.excecoes.DocumentoInvalido;
 import br.com.serratec.repositorios.RepositorioUsuario;
 
 public class ManipuladorUsuarios {
-	public static void arquivoUsuarioloader() throws CadastroJaExisteException, DocumentoInvalido, IOException{
-        	File arquivoUsuario = new File("usuarios.txt");
+	public static void arquivoUsuarioloader() throws CadastroJaExisteException, DocumentoInvalido, IOException {
+		File arquivoUsuario = new File("usuarios.txt");
 
-        	FileReader leitorUsuario = null;
-        	leitorUsuario = new FileReader(arquivoUsuario);
+		FileReader leitorUsuario = null;
+		leitorUsuario = new FileReader(arquivoUsuario);
 
-        	BufferedReader leitorUsuariobr = new BufferedReader(leitorUsuario);
+		BufferedReader leitorUsuariobr = new BufferedReader(leitorUsuario);
 
-        	do {
-            String usuarioString = leitorUsuariobr.readLine();
-            if(usuarioString == null) {
-                break;
-            }
-            String[] usuarioVetor = usuarioString.split(";");
+		do {
+			String usuarioString = leitorUsuariobr.readLine();
+			if (usuarioString == null) {
+				break;
+			}
+			String[] usuarioVetor = usuarioString.split(";");
 
-            String nome = usuarioVetor[0];
-            String cpf = usuarioVetor[1];
-            String senha = usuarioVetor[2];
-            String cargo = usuarioVetor[3];
-           
-            if(cargo.equals("gerente")) {
-            int agencia = Integer.parseInt(usuarioVetor[4]);
-            Usuario usuario = new Gerente (nome, cpf, senha, cargo, agencia);
-            RepositorioUsuario.adicionaUsuario(usuario);
-        	}
-        	if(cargo.equals("presidente")) {
-            Usuario usuario = new Presidente (nome, cpf, senha, cargo);
-            RepositorioUsuario.adicionaUsuario(usuario);
+			String nome = usuarioVetor[0];
+			String cpf = usuarioVetor[1];
+			String senha = usuarioVetor[2];
+			String cargo = usuarioVetor[3];
+
+			if (cargo.equals("gerente")) {
+				int agencia = Integer.parseInt(usuarioVetor[4]);
+				Usuario usuario = new Gerente(nome, cpf, senha, cargo, agencia);
+				RepositorioUsuario.adicionaUsuario(usuario);
 			}
-			if(cargo.equals("diretor")) {
-			Usuario usuario = new Diretor (nome, cpf, senha, cargo);
-			RepositorioUsuario.adicionaUsuario(usuario);
+			if (cargo.equals("presidente")) {
+				Usuario usuario = new Presidente(nome, cpf, senha, cargo);
+				RepositorioUsuario.adicionaUsuario(usuario);
 			}
-			if(cargo.equals("null")) { 
-			Usuario usuario = new Cliente (nome, cpf, senha);
-			RepositorioUsuario.adicionaUsuario(usuario);
+			if (cargo.equals("diretor")) {
+				Usuario usuario = new Diretor(nome, cpf, senha, cargo);
+				RepositorioUsuario.adicionaUsuario(usuario);
 			}
-			
-			}while(true);
-        	
-        	leitorUsuario.close();
-        	leitorUsuariobr.close();
+			if (cargo.equals("null")) {
+				Usuario usuario = new Cliente(nome, cpf, senha);
+				RepositorioUsuario.adicionaUsuario(usuario);
 			}
-			}
+
+		} while (true);
+
+		leitorUsuario.close();
+		leitorUsuariobr.close();
+	}
+}

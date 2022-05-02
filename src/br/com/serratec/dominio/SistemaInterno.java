@@ -8,68 +8,123 @@ import br.com.serratec.entidades.Cliente;
 import br.com.serratec.entidades.Conta;
 import br.com.serratec.entidades.ContaCorrente;
 import br.com.serratec.entidades.ContaPoupanca;
-import br.com.serratec.entidades.Funcionario;
+import br.com.serratec.entidades.Diretor;
+import br.com.serratec.entidades.Gerente;
+import br.com.serratec.entidades.Presidente;
 import br.com.serratec.entidades.Usuario;
 import br.com.serratec.excecoes.CadastroJaExisteException;
 import br.com.serratec.excecoes.CadastroNaoExisteException;
 import br.com.serratec.excecoes.ContaInvalidaException;
 import br.com.serratec.excecoes.DocumentoInvalido;
+import br.com.serratec.excecoes.jaContemSeguroException;
 import br.com.serratec.excecoes.valorInvalidoException;
 import br.com.serratec.manipuladores.ManipuladorContas;
 import br.com.serratec.manipuladores.ManipuladorUsuarios;
-import br.com.serratec.repositorios.RepositorioUsuario;
-import br.com.serratec.validador.ValidarCpf;
-import br.com.serratec.entidades.Gerente;
-import br.com.serratec.entidades.Diretor;
-import br.com.serratec.entidades.Presidente;
 import br.com.serratec.repositorios.RepositorioContaCorrente;
 import br.com.serratec.repositorios.RepositorioContaPoupanca;
+import br.com.serratec.repositorios.RepositorioUsuario;
+import br.com.serratec.validador.ValidarCpf;
 
 public class SistemaInterno {
 
 	public static void main(String[] args) throws DocumentoInvalido, CadastroNaoExisteException, valorInvalidoException,
-			ContaInvalidaException, CadastroJaExisteException, IOException {
+			ContaInvalidaException, CadastroJaExisteException, IOException, jaContemSeguroException {
 
-		ManipuladorUsuarios.arquivoUsuarioloader();
-		Scanner leitor = new Scanner(System.in);
-		ManipuladorContas.arquivoContasloader();
-		Usuario usuario = Login(leitor);
-		System.out.println("Login efetuado com sucesso!");
-		int logoutnum=0;
-		do {
-			if(logoutnum==0) {
-			logoutnum=mostraMenuInicial(leitor, usuario,logoutnum);
-			mostraMenuInicial(leitor, usuario,logoutnum);
-			}else{
+		try {
+			ManipuladorUsuarios.arquivoUsuarioloader();
+			Scanner leitor = new Scanner(System.in);
+			ManipuladorContas.arquivoContasloader();
+			Usuario usuario = Login(leitor);
+			System.out.println("Login efetuado com sucesso!");
+			//Ao tentar contratar um seguro de vida e dar erro o programa finaliza
+			do {
+				mostraMenuInicial(leitor, usuario);
+
 				Usuario usuarioNovo = Login(leitor);
-				logoutnum=mostraMenuInicial(leitor, usuarioNovo,logoutnum);
-				mostraMenuInicial(leitor, usuarioNovo,logoutnum);
-			}
-		} while (true);
+
+				mostraMenuInicial(leitor, usuarioNovo);
+
+			} while (true);
+		} catch (DocumentoInvalido e) {
+			System.out.println(e.getMessage());
+		} catch (CadastroNaoExisteException e) {
+			System.out.println(e.getMessage());
+		} catch (valorInvalidoException e) {
+			System.out.println(e.getMessage());
+		} catch (ContaInvalidaException e) {
+			System.out.println(e.getMessage());
+		} catch (CadastroJaExisteException e) {
+			System.out.println(e.getMessage());
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		} catch (jaContemSeguroException e) {
+			System.out.println(e.getMessage());
+		}
 
 	}
 
-	public static int mostraMenuInicial(Scanner leitor, Usuario usuario, int logoutnum)
-			throws valorInvalidoException, DocumentoInvalido, ContaInvalidaException, CadastroNaoExisteException {
+	public static void mostraMenuInicial(Scanner leitor, Usuario usuario) throws valorInvalidoException,
+			DocumentoInvalido, ContaInvalidaException, CadastroNaoExisteException, jaContemSeguroException {
+		int opcaoLogout;
 		Conta tipoconta = descobrirTipoConta(usuario, leitor);
-		int opcao = leitorOpcao(leitor, 3, "1 - Movimentações na conta" + "\n2 - Relatórios" + "\n3 - Logout"
-				+ "\n0 - Sair" + "\nInsira sua escolha: ");
-		switch (opcao) {
-		case 1:
-			mostraMenuMovimentacao(leitor, tipoconta);
-			break;
-		case 2:
-			mostraMenuRelatorio(leitor, tipoconta);
-			break;
-		case 3:
-			logoutnum=1;
-			return logoutnum;
-		default:
-			System.out.println("Sair");
-			System.exit(0);
+		if (usuario instanceof Cliente) {
+			do {
+				int opcao = leitorOpcao(leitor, 4, "1 - Movimentações na conta" + "\n2 - Relatórios"
+						+ "\n3 - Seguro de vida" + "\n4 - Logout" + "\n0 - Sair" + "\nInsira sua escolha: ");
+				switch (opcao) {
+				case 1:
+					mostraMenuMovimentacao(leitor, tipoconta);
+					break;
+				case 2:
+					mostraMenuRelatorio(leitor, tipoconta);
+					break;
+				case 3:
+					if (((Cliente) usuario).ContemSegurodeVida() == true) {
+						System.out.println(
+								"O valor do seu seguro de vida é de: R$" + ((Cliente) usuario).getValorSeguro());
+					} else {
+						int opcaoSeguro = leitorOpcao(leitor, 2,
+								"Deseja contratar um seguro de vida? \n1 - Sim \n2 - Não \nInsira sua escolha:");
+						if (opcaoSeguro == 1) {
+							System.out.println("Insira o valor do seguro de vida:");
+							double valorInseridoSeguro = leitor.nextDouble();
+							leitor.nextLine();
+							((Cliente) usuario).ContrataSeguro(valorInseridoSeguro, tipoconta);
+						} else {
+							break;
+						}
+					}
+					break;
+				case 4:
+					break;
+				default:
+					System.out.println("Sair");
+					System.exit(0);
+				}
+
+				opcaoLogout = opcao;
+			} while (opcaoLogout != 4);
+		} else {
+			do {
+				int opcao = leitorOpcao(leitor, 3, "1 - Movimentações na conta" + "\n2 - Relatórios" + "\n3 - Logout"
+						+ "\n0 - Sair" + "\nInsira sua escolha: ");
+				switch (opcao) {
+				case 1:
+					mostraMenuMovimentacao(leitor, tipoconta);
+					break;
+				case 2:
+					mostraMenuRelatorio(leitor, tipoconta);
+					break;
+				case 3:
+					break;
+				default:
+					System.out.println("Sair");
+					System.exit(0);
+				}
+				opcaoLogout = opcao;
+			} while (opcaoLogout != 3);
 		}
-		return logoutnum;
-		//TODO ARRUMAR UM JEITO DESSA MERDA PARAR DE HERDAR A CLASSE DA CONTA ANTERIOR AO LOGOUT
+
 	}
 
 	public static void mostraMenuMovimentacao(Scanner leitor, Conta conta)
@@ -333,7 +388,7 @@ public class SistemaInterno {
 				}
 				System.out.println("Opção Inválida: Digite um número dentro da faixa.");
 			} catch (InputMismatchException ex) {
-				System.out.println("Caracters Inválido!");
+				System.out.println("Caracter Inválido!");
 			} finally {
 				leitor.nextLine();
 			}
