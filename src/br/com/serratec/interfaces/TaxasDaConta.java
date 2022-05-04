@@ -1,5 +1,6 @@
 package br.com.serratec.interfaces;
 
+// Aqui poderia ser um enum ou pelo menos fazer esses atributos estáticos e final
 public class TaxasDaConta {
 	public double taxaSaque = 0.10;
 	public double taxaDeposito = 0.10;

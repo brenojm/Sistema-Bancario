@@ -29,6 +29,7 @@ public class ContaPoupanca extends Conta {
 			if (1 < dataInseridaFinal.getMonthValue() - dataInseridaInicial.getMonthValue()) {
 				throw new PeriodoInvalidoException();
 			}
+			// Legal essa verificação
 			if (dataInseridaInicial.isBefore(LocalDate.now())) {
 				throw new DataParseException();
 			}
