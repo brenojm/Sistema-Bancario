@@ -133,6 +133,7 @@ public class SistemaInterno {
 			throws valorInvalidoException, DocumentoInvalido, ContaInvalidaException, CadastroNaoExisteException {
 		int opcao = leitorOpcao(leitor, 3,
 				"1 - Saque" + "\n2 - Depósito" + "\n3 - Transfêrencia" + "\n0 - Sair" + "\nInsira sua escolha: ");
+		// Aqui dispara um InputMismatchException se inserir letras
 		switch (opcao) {
 		case 1:
 			System.out.println("Insira o valor que deseja sacar: ");

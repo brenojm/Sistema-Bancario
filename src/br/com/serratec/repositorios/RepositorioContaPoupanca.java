@@ -19,6 +19,7 @@ public class RepositorioContaPoupanca {
 		ContaPoupanca contaPoupanca = RepositorioContaPoupanca.getMapaContaPoupancaCpf(conta.getCpfPorUsuario());
 
 		if (conta.getUsuario() instanceof Cliente) {
+			// Essa solução não escala muito bem já que exige que tenha uma função para cada agência
 			switch (contaPoupanca.getAgencia()) {
 			case 1234:
 				Conta.aumentaQuantidadeAgencia1234();

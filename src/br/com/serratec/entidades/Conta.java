@@ -12,6 +12,7 @@ public abstract class Conta implements metodosConta {
 	private Usuario usuario;
 	private int agencia;
 	private String idConta;
+	// Esse atributo poderia ser estático já que todas as contas correntes e contas poupanças terão o mesmo tipo
 	private char tipoConta;
 	private double saldo;
 	protected static int quantidadeAgencia1234, quantidadeAgencia4321, quantidadeAgencia7883, quantidadeAgencia3533;
@@ -113,6 +114,7 @@ public abstract class Conta implements metodosConta {
 		return saldo;
 	}
 
+	// Aqui é o mesmo caso, não escala muito bem para quando o número de contas subir
 	public static int getQuantidadeAgencia(int numAgencia) {
 		switch (numAgencia) {
 		case 1234:

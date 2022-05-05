@@ -18,6 +18,7 @@ public class RepositorioContaCorrente {
 		mapaContaCorrente.put(conta.getCpfPorUsuario(), (ContaCorrente) conta);
 		ContaCorrente contaCorrente = RepositorioContaCorrente.getMapaContaCorrenteCpf(conta.getCpfPorUsuario());
 		if (conta.getUsuario() instanceof Cliente) {
+			// Essa solução não escala muito bem já que exige que tenha uma função para cada agência
 			switch (contaCorrente.getAgencia()) {
 			case 1234:
 				Conta.aumentaQuantidadeAgencia1234();
